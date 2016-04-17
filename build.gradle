@@ -5,6 +5,7 @@ buildscript {
     repositories {
         jcenter()
         mavenCentral()
+        flatDir { dir rootProject.file('libs') }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.1"
@@ -17,14 +18,13 @@ apply plugin: 'kotlin'
 apply plugin: 'jacoco'
 apply plugin: 'com.github.kt3k.coveralls'
 
-def javaFxHome = "${System.properties['java.home']}";
-
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 jacocoTestReport {
     reports {
-        xml.enabled = true // coveralls plugin depends on xml format report
+        xml.enabled = true
+        csv.enabled false
         html.enabled = true
     }
 }
@@ -38,15 +38,7 @@ repositories {
     mavenCentral()
 }
 
-println "java home is: " + javaFxHome
-//println "searching for jfxrt.jar..."
-//eval find javaFxHome -name "jfxrt.jar"
-//println "end of search!"
-
-
 dependencies {
-    compile files("$javaFxHome/lib/ext/jfxrt.jar")
-
     compile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.1'
     compile 'io.reactivex:rxjavafx:0.0.5'
     compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'

@@ -6,10 +6,24 @@ machine:
     - echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
     - sudo apt-get install oracle-java8-installer oracle-java8-set-default
   environment:
+    JAVA_HOME: /usr/lib/jvm/java-8-oracle
     # This causes gradle to output clean logging output.
     # Otherwise, the logging output would be malformatted on the web console.
     TERM: dumb
-    JAVA_HOME: /usr/lib/jvm/java-8-oracle
+    # Need to set many env vars so that CircleCI can talk to Coveralls
+    CI_NAME: Circle-CI
+    CI_BRANCH: $CIRCLE_BRANCH
+    CI_BUILD_NUMBER: $CIRCLE_BUILD_NUM
+    CI_BUILD_URL: $CIRCLE_COMPARE_URL
+    COVERALLS_REPO_TOKEN: ECwAbYGbNXAmib66BQMDwrUZq0CJLx5lk
+
+general:
+  artifacts:
+    - "build/reports/tests"
+    - "build/reports/jacoco"
+
 test:
   post:
-    - ./gradlew assemble
+    - ./gradlew jacocoTestReport coveralls
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+    - find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
