@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class ViewUtils {
 
-    public static void init(Parent view, String fxml, String css) {
+    public static void initView(Parent view, String fxml, String css) {
         FXMLLoader fxmlLoader = new FXMLLoader(view.getClass().getClassLoader().getResource(fxml));
         fxmlLoader.setRoot(view);
         fxmlLoader.setController(view);

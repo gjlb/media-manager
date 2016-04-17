@@ -15,7 +15,6 @@ public class MediaManagerMain extends Application {
     private static ObjectGraph objectGraph;
 
     public static void main(String[] args) {
-        objectGraph = ObjectGraph.create(new MediaManagerModule());
         launch(args);
     }
 
@@ -25,6 +24,8 @@ public class MediaManagerMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        objectGraph = ObjectGraph.create(new MediaManagerModule());
+        
         primaryStage.setOnCloseRequest(event -> System.exit(0));
 
         URL resource = getClass().getClassLoader().getResource("fxml/library.fxml");

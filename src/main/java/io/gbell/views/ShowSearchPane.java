@@ -43,7 +43,7 @@ public class ShowSearchPane extends VBox {
     private Subscription subscription;
 
     public ShowSearchPane(SearchListener searchListener) {
-        ViewUtils.init(this, "fxml/show_search_pane.fxml", "css/show_search_pane.css");
+        ViewUtils.initView(this, "fxml/show_search_pane.fxml", "css/show_search_pane.css");
 
         this.searchListener = searchListener;
         results.getChildren().clear();

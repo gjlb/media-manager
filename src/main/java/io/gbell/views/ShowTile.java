@@ -11,7 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-public abstract class ShowTile extends HBox {
+abstract class ShowTile extends HBox {
 
     @FXML
     private ImageView coverImage;
@@ -40,8 +40,8 @@ public abstract class ShowTile extends HBox {
     @FXML
     Button action;
 
-    public ShowTile(String coverImage, String title, String altTitle, String detail1, String detail2, String detail3) {
-        ViewUtils.init(this, "fxml/show_tile.fxml", "css/show_tile.css");
+    ShowTile(String coverImage, String title, String altTitle, String detail1, String detail2, String detail3) {
+        ViewUtils.initView(this, "fxml/show_tile.fxml", "css/show_tile.css");
 
         this.coverImage.setImage(new Image(coverImage, 80, 150, true, true, true));
         setText(this.details, this.title, title);
@@ -61,12 +61,4 @@ public abstract class ShowTile extends HBox {
             label.setText(text);
         }
     }
-
-//    public interface AddToLibraryListener {
-//        public void onAddToLibrary(AnimeSearchResult animeSearchResult);
-//    }
-//
-//    private void browseShow(AnimeShow animeShow) {
-//        System.out.println("browsing show: " + TextUtils.getTitle(animeShow));
-//    }
 }
