@@ -1,0 +1,13 @@
+#results {
+    #error {
+        -fx-text-fill: red;
+        -fx-padding: 20px;
+    }
+    #scrollPane {
+        -fx-background-color: transparent;
+    }
+    #resultsContainer {
+        -fx-background-color: white;
+        -fx-padding: 5px;
+    }
+}

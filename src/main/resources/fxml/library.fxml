@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane xmlns="http://javafx.com/javafx/8"
+         xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="io.gbell.controllers.LibraryController"
+         stylesheets="@../css/library.css"
+         tabClosingPolicy="UNAVAILABLE">
+
+    <tabs>
+        <Tab text="TV Shows">
+            <content>
+                <VBox>
+                    <children>
+
+                        <fx:include
+                                source="tv_search_area.fxml"
+                                styleClass="searchArea"/>
+
+                        <FlowPane
+                                fx:id="tvLibrary"
+                                styleClass="libraryPane"
+                                vgap="15"
+                                hgap="15"/>
+
+                    </children>
+                </VBox>
+            </content>
+        </Tab>
+
+        <Tab text="Anime">
+            <content>
+                <VBox>
+                    <children>
+
+                        <fx:include
+                                source="anime_search_area.fxml"
+                                styleClass="searchArea"/>
+
+                        <FlowPane
+                                fx:id="animeLibrary"
+                                styleClass="libraryPane"
+                                vgap="15"
+                                hgap="15"/>
+
+                    </children>
+                </VBox>
+            </content>
+        </Tab>
+    </tabs>
+
+</TabPane>

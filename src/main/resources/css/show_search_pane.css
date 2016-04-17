@@ -1,0 +1,10 @@
+#results #error {
+  -fx-text-fill: red;
+  -fx-padding: 20px; }
+#results #scrollPane {
+  -fx-background-color: transparent; }
+#results #resultsContainer {
+  -fx-background-color: white;
+  -fx-padding: 5px; }
+
+/*# sourceMappingURL=show_search_pane.css.map */

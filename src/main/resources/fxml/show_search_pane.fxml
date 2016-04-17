@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root xmlns="http://javafx.com/javafx/8"
+         xmlns:fx="http://javafx.com/fxml/1"
+         type="javafx.scene.layout.VBox"
+         stylesheets="@../css/show_search_pane.css"
+         spacing="5">
+
+    <Label styleClass="title" text="Find New Show:" />
+
+    <HBox fx:id="filterArea" spacing="5">
+        <TextField fx:id="query" prefWidth="250" promptText="Search for..." />
+    </HBox>
+
+    <VBox fx:id="results">
+        <ProgressIndicator fx:id="waiting" prefHeight="30" />
+        <Label fx:id="error" text="Sorry, something seems to have gone wrong ¯\_(ツ)_/¯" wrapText="true" />
+        <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" vbarPolicy="NEVER">
+            <content>
+                <HBox fx:id="resultsContainer" spacing="15" />
+            </content>
+        </ScrollPane>
+    </VBox>
+
+</fx:root>

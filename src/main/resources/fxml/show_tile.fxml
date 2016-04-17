@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root xmlns="http://javafx.com/javafx/8"
+         xmlns:fx="http://javafx.com/fxml/1"
+         type="javafx.scene.layout.HBox"
+         stylesheets="@../css/show_tile.css">
+
+   <HBox styleClass="card" spacing="5">
+       <ImageView fx:id="coverImage" fitWidth="80" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../ps.jpg" />
+         </image>
+       </ImageView>
+
+       <VBox fx:id="details" spacing="5">
+           <children>
+               <Label fx:id="title" text="Attack on Titan Attack on Titan Attack on Titan" wrapText="true" prefWidth="125" maxHeight="32" />
+               <Label fx:id="altTitle" text="Shingeki no Kyojin Shingeki no Kyojin Shingeki no Kyojin" wrapText="true" prefWidth="125" maxHeight="28" />
+               <HBox fx:id="minorDetails" spacing="5" >
+                   <children>
+                       <Label fx:id="minorDetail1" text="TV" />
+                       <Label fx:id="minorDetail2" text="36 eps" />
+                       <Label fx:id="minorDetail3" text="24 min" />
+                   </children>
+               </HBox>
+               <Button fx:id="action" text="Do Something" />
+           </children>
+       </VBox>
+   </HBox>
+
+</fx:root>
