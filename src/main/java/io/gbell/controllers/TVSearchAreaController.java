@@ -18,6 +18,7 @@ import rx.schedulers.Schedulers;
 
 import javax.inject.Inject;
 import java.net.URL;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 import static io.gbell.utils.FirebaseUtils.FIREBASE_TV_SHOWS;
@@ -61,6 +62,9 @@ public class TVSearchAreaController implements Initializable {
                 .map(searchResponse -> searchResponse.getSearchResults())
                 .doOnError(e -> searchPane.onSearchError(e))
                 .doOnNext(searchResults -> {
+                    if (searchResults == null) {
+                        searchResults = Collections.emptyList();
+                    }
                     System.out.println("Got " + searchResults.size() + " results");
                     searchPane.showSearchResults(true);
                 })

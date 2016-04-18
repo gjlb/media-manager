@@ -1,6 +1,7 @@
 package io.gbell.controllers;
 
 import com.firebase.client.Firebase;
+import com.jfoenix.controls.JFXCheckBox;
 import io.gbell.MediaManagerMain;
 import io.gbell.models.FirebaseEvent;
 import io.gbell.models.anime.AnimeSearchResult;
@@ -23,6 +24,7 @@ import rx.schedulers.Schedulers;
 import javax.inject.Inject;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -42,14 +44,14 @@ public class AnimeSearchAreaController implements Initializable {
     Firebase firebase;
 
     private final List<AnimeSearchResult> searchResultList = new ArrayList<>();
-    private CheckBox[] filters;
+    private JFXCheckBox[] filters;
     private Func1<AnimeSearchResult, Boolean> filterFunc;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         MediaManagerMain.inject(this);
 
-        filters = new CheckBox[] {
+        filters = new JFXCheckBox[] {
                 createFilter("TV"),
                 createFilter("OVA"),
                 createFilter("Special"),
@@ -82,8 +84,9 @@ public class AnimeSearchAreaController implements Initializable {
                 });
     }
 
-    private CheckBox createFilter(String text) {
-        CheckBox filter = new CheckBox(text);
+    private JFXCheckBox createFilter(String text) {
+        JFXCheckBox filter = new JFXCheckBox(text);
+        filter.getStyleClass().add("jfx-checkbox");
         filter.setSelected(true);
         JavaFxObservable.fromActionEvents(filter).subscribe(event -> updateResults());
         return filter;
@@ -95,6 +98,9 @@ public class AnimeSearchAreaController implements Initializable {
                 .observeOn(JavaFxScheduler.getInstance())   // ...then take action with result on main thread
                 .doOnError(e -> searchPane.onSearchError(e))
                 .doOnNext(searchResults -> {
+                    if (searchResults == null) {
+                        searchResults = Collections.emptyList();
+                    }
                     System.out.println("Got " + searchResults.size() + " results");
                     searchPane.showSearchResults(true);
                     searchResultList.clear();

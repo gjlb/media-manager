@@ -16,38 +16,28 @@
     -fx-text-fill: grey;
 }
 
-#minorDetail1 {
-    -fx-font-size: 8pt;
-    -fx-text-fill: white;
-    -fx-background-color: #428bca;
-    -fx-background-radius: 3;
-    -fx-padding: 2px;
+#minorDetails {
+    .label {
+        -fx-font-size: 8pt;
+        -fx-text-fill: white;
+        -fx-background-radius: 3;
+        -fx-padding: 2px;
+    }
+    #minorDetail1 {
+        -fx-background-color: #428bca;
+    }
+    #minorDetail2 {
+        -fx-background-color: #ff6600;
+    }
+    #minorDetail3 {
+        -fx-background-color: #a0a0a0;
+    }
 }
 
-#minorDetail2 {
-    -fx-font-size: 8pt;
-    -fx-text-fill: white;
-    -fx-background-color: #ff6600;
-    -fx-background-radius: 3;
-    -fx-padding: 2px;
+.jfx-button {
+    -fx-padding: 0.57em;
+    -fx-font-size: 12px;
+    -fx-button-type: RAISED;
+    -fx-background-color: rgb(77,102,204);
+    -fx-text-fill: WHITE;
 }
-
-#minorDetail3 {
-    -fx-font-size: 8pt;
-    -fx-text-fill: white;
-    -fx-background-color: #a0a0a0;
-    -fx-background-radius: 3;
-    -fx-padding: 2px;
-}
-
-/*#addToLibrary {
-    -fx-background-color:
-        #000000,
-        linear-gradient(#7ebcea, #2f4b8f),
-        linear-gradient(#426ab7, #263e75),
-        linear-gradient(#395cab, #223768);
-    -fx-background-insets: 0,1,2,3;
-    -fx-background-radius: 3,2,2,2;
-    -fx-padding: 6;
-    -fx-text-fill: white;
-}*/

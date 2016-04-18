@@ -1,3 +1,6 @@
+#filterArea {
+  -fx-padding: 20px 0 0 0; }
+
 #results #error {
   -fx-text-fill: red;
   -fx-padding: 20px; }

@@ -1,5 +1,6 @@
 package io.gbell.views;
 
+import com.jfoenix.controls.JFXButton;
 import io.gbell.utils.TextUtils;
 import io.gbell.utils.ViewUtils;
 import javafx.fxml.FXML;
@@ -38,7 +39,7 @@ abstract class ShowTile extends HBox {
     private Label minorDetail3;
 
     @FXML
-    Button action;
+    JFXButton action;
 
     ShowTile(String coverImage, String title, String altTitle, String detail1, String detail2, String detail3) {
         ViewUtils.initView(this, "fxml/show_tile.fxml", "css/show_tile.css");

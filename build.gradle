@@ -39,6 +39,7 @@ repositories {
 }
 
 dependencies {
+    compile files('libs/jfoenix.jar')
     compile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.1'
     compile 'io.reactivex:rxjavafx:0.0.5'
     compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'

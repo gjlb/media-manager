@@ -1,5 +1,8 @@
 package io.gbell.views;
 
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXSpinner;
+import com.jfoenix.controls.JFXTextField;
 import io.gbell.utils.TextUtils;
 import io.gbell.utils.ViewUtils;
 import javafx.fxml.FXML;
@@ -18,7 +21,7 @@ public class ShowSearchPane extends VBox {
     }
 
     @FXML
-    private TextField query;
+    private JFXTextField query;
 
     @FXML
     private HBox filterArea;
@@ -27,7 +30,7 @@ public class ShowSearchPane extends VBox {
     private VBox results;
 
     @FXML
-    private ProgressIndicator waiting;
+    private JFXSpinner waiting;
 
     @FXML
     private Label error;
@@ -54,8 +57,8 @@ public class ShowSearchPane extends VBox {
         }
     }
 
-    public void addFilters(CheckBox[] filters) {
-        for (CheckBox filter : filters) {
+    public void addFilters(JFXCheckBox[] filters) {
+        for (JFXCheckBox filter : filters) {
             filterArea.getChildren().addAll(filter);
         }
     }
