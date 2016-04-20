@@ -1,6 +1,5 @@
 package io.gbell.modules;
 
-import com.firebase.client.Firebase;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,6 +8,7 @@ import dagger.Provides;
 import io.gbell.controllers.AnimeSearchAreaController;
 import io.gbell.controllers.LibraryController;
 import io.gbell.controllers.TVSearchAreaController;
+import io.gbell.providers.FirebaseProvider;
 import io.gbell.services.AnimeApiService;
 import io.gbell.services.TVApiService;
 import io.gbell.views.AnimeShowTile;
@@ -85,7 +85,8 @@ public class MediaManagerModule {
     }
 
     @Provides
-    Firebase providesFirebase() {
-        return new Firebase("https://scorching-torch-1007.firebaseio.com");
+    @Singleton
+    FirebaseProvider providesFirebaseProvider() {
+        return new FirebaseProvider();
     }
 }

@@ -17,11 +17,10 @@
     <VBox fx:id="results">
         <JFXSpinner fx:id="waiting" prefHeight="30" />
         <Label fx:id="error" text="Sorry, something seems to have gone wrong ¯\_(ツ)_/¯" wrapText="true" />
-        <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" vbarPolicy="NEVER">
-            <content>
-                <HBox fx:id="resultsContainer" spacing="15" />
-            </content>
+        <ScrollPane fx:id="scrollPane" hbarPolicy="ALWAYS" vbarPolicy="NEVER">
+            <HBox fx:id="resultsContainer" spacing="15"/>
         </ScrollPane>
+        <Label fx:id="empty" text="Sorry, no results. Please try again :P" wrapText="true" />
     </VBox>
 
 </fx:root>

@@ -12,43 +12,17 @@
 
     <tabs>
         <Tab text="TV Shows">
-            <content>
-                <VBox>
-                    <children>
-
-                        <fx:include
-                                source="tv_search_area.fxml"
-                                styleClass="searchArea"/>
-
-                        <FlowPane
-                                fx:id="tvLibrary"
-                                styleClass="libraryPane"
-                                vgap="15"
-                                hgap="15"/>
-
-                    </children>
-                </VBox>
-            </content>
+            <VBox>
+                <fx:include source="tv_search_area.fxml" styleClass="searchArea" VBox.vgrow="NEVER"/>
+                <JFXListView fx:id="tvLibrary" orientation="VERTICAL" expanded="false" VBox.vgrow="ALWAYS"/>
+            </VBox>
         </Tab>
 
         <Tab text="Anime">
-            <content>
-                <VBox>
-                    <children>
-
-                        <fx:include
-                                source="anime_search_area.fxml"
-                                styleClass="searchArea"/>
-
-                        <FlowPane
-                                fx:id="animeLibrary"
-                                styleClass="libraryPane"
-                                vgap="15"
-                                hgap="15"/>
-
-                    </children>
-                </VBox>
-            </content>
+            <VBox>
+                <fx:include source="anime_search_area.fxml" styleClass="searchArea" VBox.vgrow="NEVER"/>
+                <JFXListView fx:id="animeLibrary" orientation="VERTICAL" expanded="false" VBox.vgrow="ALWAYS"/>
+            </VBox>
         </Tab>
     </tabs>
 

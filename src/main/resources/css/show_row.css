@@ -1,0 +1,28 @@
+.headerArea {
+  -fx-padding: 8px; }
+
+.details {
+  -fx-padding: 0 0 0 5px;
+  -fx-font-size: 8pt;
+  -fx-text-fill: black; }
+  .details #title {
+    -fx-font-weight: bold;
+    -fx-font-size: 10pt; }
+  .details #altTitle {
+    -fx-text-fill: grey; }
+  .details .minorDetail {
+    -fx-text-fill: white;
+    -fx-background-radius: 3;
+    -fx-padding: 2px; }
+  .details #minorDetail1 {
+    -fx-background-color: #428bca; }
+  .details #minorDetail2 {
+    -fx-background-color: #51b749; }
+  .details #minorDetail3 {
+    -fx-background-color: #ff6600; }
+  .details #minorDetail4 {
+    -fx-background-color: #a0a0a0; }
+  .details #synopsis {
+    -fx-text-fill: grey; }
+
+/*# sourceMappingURL=show_row.css.map */

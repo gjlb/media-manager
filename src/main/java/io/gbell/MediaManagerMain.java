@@ -1,5 +1,6 @@
 package io.gbell;
 
+import com.firebase.client.FirebaseCredentialStore;
 import dagger.ObjectGraph;
 import io.gbell.modules.MediaManagerModule;
 import javafx.application.Application;
@@ -23,14 +24,15 @@ public class MediaManagerMain extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
+        FirebaseCredentialStore.init();
         objectGraph = ObjectGraph.create(new MediaManagerModule());
         
         primaryStage.setOnCloseRequest(event -> System.exit(0));
 
         URL resource = getClass().getClassLoader().getResource("fxml/library.fxml");
         Parent root = FXMLLoader.load(resource);
-        Scene scene = new Scene(root, 1280, 720);
+        Scene scene = new Scene(root, 960, 720);
 
         primaryStage.setTitle("Media Manager");
         primaryStage.setScene(scene);

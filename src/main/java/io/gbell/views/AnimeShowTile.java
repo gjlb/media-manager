@@ -1,6 +1,7 @@
 package io.gbell.views;
 
 import com.firebase.client.Firebase;
+import io.gbell.providers.FirebaseProvider;
 import io.gbell.MediaManagerMain;
 import io.gbell.models.anime.AnimeEpisode;
 import io.gbell.models.anime.AnimeSearchResult;
@@ -27,9 +28,9 @@ public class AnimeShowTile extends ShowTile {
     AnimeApiService animeApiService;
 
     @Inject
-    Firebase firebase;
+    FirebaseProvider firebaseProvider;
 
-    public AnimeShowTile(final AnimeSearchResult show) {
+    public AnimeShowTile(final AnimeSearchResult show, final Firebase firebase) {
         super(show.getCoverImage(),
                 show.getTitle(),
                 show.getAlternateTitle(),
@@ -59,15 +60,5 @@ public class AnimeShowTile extends ShowTile {
                 .flatMap(animeShowResponse -> Observable.from(animeShowResponse.getEpisodes()))
                 .doOnNext(episode -> firebase.child(FIREBASE_ANIME_EPISODES).child(String.valueOf(episode.getId())).setValue(episode))
                 .subscribe();
-    }
-
-    public AnimeShowTile(AnimeShow show) {
-        super(show.getPosterImage(),
-                TextUtils.getTitle(show),
-                TextUtils.getAlternateTitle(show),
-                show.getShowType(),
-                String.format("%s eps", show.getEpisodeCount()),
-                String.format("%d min", show.getEpisodeLength()));
-//        JavaFxObservable.fromNodeEvents(this, MouseEvent.MOUSE_CLICKED).subscribe(event -> browseShow(show));
     }
 }

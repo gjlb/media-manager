@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root stylesheets="@../css/show_row.css" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane styleClass="headerArea">
+         <left>
+             <HBox fx:id="posterArea">
+                 <ImageView fx:id="coverImage" fitWidth="80" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                         <Image url="@../ps.jpg" />
+                     </image>
+                 </ImageView>
+             </HBox>
+         </left>
+         <center>
+             <VBox styleClass="details" spacing="5">
+                 <children>
+                     <FlowPane fx:id="mainDetails" vgap="5" hgap="5">
+                         <children>
+                             <Label fx:id="title" text="Prison School" />
+                             <Label fx:id="altTitle" text="(Kangoku Gakuen)" />
+                             <Label fx:id="minorDetail1" styleClass="minorDetail" text="TV" />
+                             <Label fx:id="minorDetail2" styleClass="minorDetail" text="2 seasons" />
+                             <Label fx:id="minorDetail3" styleClass="minorDetail" text="36 episodes" />
+                             <Label fx:id="minorDetail4" styleClass="minorDetail" text="24 minutes" />
+                         </children>
+                     </FlowPane>
+                     <Label fx:id="airing" text="Aired from April 7, 2013 to September 28, 2013." />
+                     <Label fx:id="synopsis" wrapText="true" maxHeight="75" text="Several hundred years ago, humans were nearly exterminated by titans. Titans are typically several stories tall, seem to have no intelligence, devour human beings and, worst of all, seem to do it for the pleasure rather than as a food source. A small percentage of humanity survived by enclosing themselves in a city protected by extremely high walls, even taller than the biggest of titans. Flash forward to the present and the city has not seen a titan in over 100 years. Teenage boy Eren and his foster sister Mikasa witness something horrific as the city walls are destroyed by a colossal titan that appears out of thin air. As the smaller titans flood the city, the two kids watch in horror as their mother is eaten alive. Eren vows that he will murder every single titan and take revenge for all of mankind." />
+                 </children>
+             </VBox>
+         </center>
+      </BorderPane>
+   </children>
+</fx:root>

@@ -13,6 +13,7 @@ import rx.schedulers.JavaFxScheduler;
 import rx.schedulers.Schedulers;
 
 import javax.inject.Inject;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,11 +26,8 @@ public class TVShowTile extends ShowTile {
     @Inject
     TVApiService tvApiService;
 
-    @Inject
-    Firebase firebase;
-
-    public TVShowTile(TVShow show) {
-        super("http://thetvdb.com/banners/" + show.getPoster(),
+    public TVShowTile(TVShow show, final Firebase firebase) {
+        super(getPoster(show),
                 show.getTitle(),
                 null,
                 String.valueOf(TextUtils.parseTVDate(show.getStartedAiringDate()).getYear() + 1900),
@@ -37,6 +35,11 @@ public class TVShowTile extends ShowTile {
                 String.format("%d min", show.getEpisodeLength()));
 
         MediaManagerMain.inject(this);
+
+        if (firebase == null) {
+            details.getChildren().remove(action);
+            return;
+        }
 
         action.setText("Add To Library");
         JavaFxObservable.fromActionEvents(action)
@@ -47,9 +50,14 @@ public class TVShowTile extends ShowTile {
                 .doOnNext(tvShowResponse -> {
                     TVShow tvShow = tvShowResponse.getShowDetails();
                     List<TVEpisode> episodes = tvShowResponse.getEpisodes();
-                    int seasonCount = (episodes == null ? 0 : episodes.stream().map(TVEpisode::getSeasonNumber).collect(Collectors.toCollection(HashSet::new)).size());
+                    if (episodes == null) {
+                        episodes = Collections.emptyList();
+                    }
+                    int episodeCount = episodes.size();
+                    tvShow.setEpisodeCount(episodeCount);
+                    int seasonCount = episodes.stream().map(TVEpisode::getSeasonNumber).collect(Collectors.toCollection(HashSet::new)).size();
                     tvShow.setSeasonCount(seasonCount);
-                    System.out.println("Got show: " + tvShow.getTitle() + " with " + seasonCount + " seasons.");
+                    System.out.println("Got show: " + tvShow.getTitle() + " with " + seasonCount + " seasons and " + episodeCount + " episodes.");
                 })
                 .doOnNext(tvShowResponse -> {
                     TVShow tvShow = tvShowResponse.getShowDetails();
@@ -58,5 +66,9 @@ public class TVShowTile extends ShowTile {
                 .flatMap(tvShowResponse -> Observable.from(tvShowResponse.getEpisodes()))
                 .doOnNext(episode -> firebase.child(FIREBASE_TV_EPISODES).child(String.valueOf(episode.getId())).setValue(episode))
                 .subscribe();
+    }
+
+    private static String getPoster(TVShow show) {
+        return show.getPoster() == null ? null : "http://thetvdb.com/banners/" + show.getPoster();
     }
 }

@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox;
 import rx.Subscription;
 import rx.observables.JavaFxObservable;
 
-public class ShowSearchPane extends VBox {
+public class ShowSearchPane<T> extends VBox {
 
     public interface SearchListener {
         public Subscription performSearch(String text);
@@ -34,6 +34,9 @@ public class ShowSearchPane extends VBox {
 
     @FXML
     private Label error;
+
+    @FXML
+    private Label empty;
 
     @FXML
     private ScrollPane scrollPane;
@@ -71,16 +74,21 @@ public class ShowSearchPane extends VBox {
         }
     }
 
-    public void addSearchResultTile(Node tile) {
+    public void addSearchResultTile(ShowTile tile) {
         resultsContainer.getChildren().add(tile);
     }
 
-    public void showSearchResults(boolean clear) {
+    public void showSearchResults() {
         setSearchAreaChild(scrollPane, Pos.CENTER_LEFT);
         scrollPane.setHvalue(0);
-        if (clear) {
-            resultsContainer.getChildren().clear();
-        }
+    }
+
+    public void clearSearchResults() {
+        resultsContainer.getChildren().clear();
+    }
+
+    public void showEmptyMessage() {
+        setSearchAreaChild(empty, Pos.CENTER_LEFT);
     }
 
     public void onSearchError(Throwable e) {
@@ -117,6 +125,7 @@ public class ShowSearchPane extends VBox {
             subscription.unsubscribe();
             subscription = null;
         }
+        clearSearchResults();
         setSearchAreaChild(null, null);
         prevQuery = "";
         query.setText(prevQuery);

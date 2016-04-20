@@ -1,6 +1,8 @@
 package io.gbell.models.anime;
 
-public class AnimeSearchResult {
+import org.jetbrains.annotations.NotNull;
+
+public class AnimeSearchResult implements Comparable<AnimeSearchResult> {
 
     private int id;
     private String slug;
@@ -43,5 +45,33 @@ public class AnimeSearchResult {
 
     public String getShowType() {
         return showType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AnimeSearchResult that = (AnimeSearchResult) o;
+
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public int compareTo(@NotNull AnimeSearchResult o) {
+        return this.getTitle().compareTo(o.getTitle());
+    }
+
+    @Override
+    public String toString() {
+        return "AnimeSearchResult{" +
+                "id=" + id +
+                ", slug='" + slug + '\'' +
+                '}';
     }
 }

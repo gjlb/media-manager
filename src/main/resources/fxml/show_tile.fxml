@@ -10,7 +10,7 @@
          type="javafx.scene.layout.HBox"
          stylesheets="@../css/show_tile.css">
 
-   <HBox styleClass="card" spacing="5">
+   <HBox fx:id="root" styleClass="card" spacing="5">
        <ImageView fx:id="coverImage" fitWidth="80" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../ps.jpg" />

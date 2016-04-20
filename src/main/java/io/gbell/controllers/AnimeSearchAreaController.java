@@ -6,7 +6,9 @@ import io.gbell.MediaManagerMain;
 import io.gbell.models.FirebaseEvent;
 import io.gbell.models.anime.AnimeSearchResult;
 import io.gbell.models.anime.AnimeShow;
+import io.gbell.providers.FirebaseProvider;
 import io.gbell.services.AnimeApiService;
+import io.gbell.utils.DialogUtils;
 import io.gbell.utils.FirebaseUtils;
 import io.gbell.views.AnimeShowTile;
 import io.gbell.views.ShowSearchPane;
@@ -15,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.Pane;
 import rx.Observable;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.observables.ConnectableObservable;
 import rx.observables.JavaFxObservable;
@@ -35,17 +38,19 @@ public class AnimeSearchAreaController implements Initializable {
     @FXML
     private Pane root;
 
-    private ShowSearchPane searchPane;
+    private ShowSearchPane<AnimeSearchResult> searchPane;
 
     @Inject
     AnimeApiService animeApiService;
 
     @Inject
-    Firebase firebase;
+    FirebaseProvider firebaseProvider;
 
-    private final List<AnimeSearchResult> searchResultList = new ArrayList<>();
-    private JFXCheckBox[] filters;
+    private Firebase firebase;
+
+    private List<AnimeSearchResult> searchResultList = new ArrayList<>();
     private Func1<AnimeSearchResult, Boolean> filterFunc;
+    private JFXCheckBox[] filters;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -67,19 +72,26 @@ public class AnimeSearchAreaController implements Initializable {
             return false;
         };
 
-        searchPane = new ShowSearchPane(getSearchListener());
+        searchPane = new ShowSearchPane<>(getSearchListener());
         searchPane.addFilters(filters);
         root.getChildren().add(searchPane);
 
-        Firebase showsRef = firebase.child(FIREBASE_ANIME_SHOWS);
-        ConnectableObservable<FirebaseEvent<AnimeShow>> observable = FirebaseUtils.observeForChildEvent(showsRef, AnimeShow.class).replay();
+        ConnectableObservable<FirebaseEvent<AnimeShow>> observable = firebaseProvider.get()
+                .subscribeOn(Schedulers.newThread())        // wait for result on background thread...
+                .observeOn(JavaFxScheduler.getInstance())   // ...then take action with result on main thread
+                .doOnError(e -> DialogUtils.showExceptionDialog(null, "Failed to fetch show information.", e))
+                .doOnNext(firebaseRef -> firebase = firebaseRef)
+                .flatMap(firebaseRef -> FirebaseUtils.observeForChildEvent(firebaseRef.child(FIREBASE_ANIME_SHOWS), AnimeShow.class))
+                .replay();
+
         observable.connect();
         observable
                 .subscribeOn(Schedulers.newThread())        // wait for result on background thread...
                 .observeOn(JavaFxScheduler.getInstance())   // ...then take action with result on main thread
-                 .subscribe(event -> {
+                .subscribe(event -> {
                     if (event.getAction() == FirebaseEvent.ADDED) {
                         searchPane.reset();
+                        searchResultList.clear();
                     }
                 });
     }
@@ -97,26 +109,26 @@ public class AnimeSearchAreaController implements Initializable {
                 .subscribeOn(Schedulers.newThread())        // wait for result on background thread...
                 .observeOn(JavaFxScheduler.getInstance())   // ...then take action with result on main thread
                 .doOnError(e -> searchPane.onSearchError(e))
-                .doOnNext(searchResults -> {
-                    if (searchResults == null) {
-                        searchResults = Collections.emptyList();
-                    }
-                    System.out.println("Got " + searchResults.size() + " results");
-                    searchPane.showSearchResults(true);
-                    searchResultList.clear();
-                    searchResultList.addAll(searchResults);
+                .map(searchResults -> {
+                    searchResultList = (searchResults == null ? Collections.emptyList() : searchResults);
+                    System.out.println("Got " + searchResultList.size() + " results");
+                    searchPane.showEmptyMessage();
+                    searchPane.clearSearchResults();
+                    return searchResultList;
                 })
                 .flatMap(searchResult -> Observable.from(searchResult))
                 .filter(filterFunc)
-                .doOnNext(searchResult -> searchPane.addSearchResultTile(new AnimeShowTile(searchResult)))
-                .subscribe();
+                .subscribe(searchResult -> {
+                    searchPane.showSearchResults();
+                    searchPane.addSearchResultTile(new AnimeShowTile(searchResult, firebase));
+                });
     }
 
     private void updateResults() {
-        searchPane.showSearchResults(true);
+        searchPane.clearSearchResults();
         Observable.from(searchResultList)
                 .filter(filterFunc)
-                .doOnNext(searchResult -> searchPane.addSearchResultTile(new AnimeShowTile(searchResult)))
+                .doOnNext(searchResult -> searchPane.addSearchResultTile(new AnimeShowTile(searchResult, firebase)))
                 .subscribe();
     }
 }

@@ -1,6 +1,9 @@
 package io.gbell.models.anime;
 
-public class AnimeShow {
+import io.gbell.utils.TextUtils;
+import org.jetbrains.annotations.NotNull;
+
+public class AnimeShow implements Comparable<AnimeShow> {
 
     private int id;
     private String slug;
@@ -67,6 +70,34 @@ public class AnimeShow {
 
     public void setSeasonCount(int seasonCount) {
         this.seasonCount = seasonCount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AnimeShow animeShow = (AnimeShow) o;
+
+        return id == animeShow.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public int compareTo(@NotNull AnimeShow o) {
+        return TextUtils.getTitle(this).compareTo(TextUtils.getTitle(o));
+    }
+
+    @Override
+    public String toString() {
+        return "AnimeShow{" +
+                "id=" + id +
+                ", slug='" + slug + '\'' +
+                '}';
     }
 
     public class Titles {
